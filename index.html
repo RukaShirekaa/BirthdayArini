@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>A Little Place Called Us — Happy Birthday, Arini!</title>
+  <meta name="description" content="A personal memory journal and digital scrapbook for my childhood best friend.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400..800;1,400..800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 (for beautiful icons & symbols) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Custom Cursor (Desktop) -->
+  <div class="custom-cursor" id="customCursor" aria-hidden="true">
+    <i class="fa-solid fa-heart"></i>
+  </div>
+  <div class="custom-cursor-follower" id="customCursorFollower" aria-hidden="true"></div>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader-content">
+      <div class="loader-envelope">
+        <div class="loader-envelope-flap"></div>
+        <div class="loader-heart"><i class="fa-solid fa-heart"></i></div>
+      </div>
+      <h2 class="loader-title">Preparing your little surprise...</h2>
+      <p class="loader-subtitle">Mengumpulkan tawa, melodi, dan kenangan kecil kita.</p>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loaderBar"></div>
+      </div>
+      <span class="loader-counter" id="loaderCounter">0%</span>
+    </div>
+  </div>
+
+  <!-- Floating Hearts Background Container -->
+  <div class="floating-hearts-container" id="floatingHeartsContainer" aria-hidden="true"></div>
+
+  <!-- Audio Element -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="assets/music/background.wav" type="audio/wav">
+    <source src="assets/music/background.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- Mobile Top Bar (Responsive Header) -->
+  <header class="mobile-topbar" id="mobileTopbar">
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Buka Menu Navigasi">
+      <i class="fa-solid fa-bars hamburger-icon"></i>
+    </button>
+    <div class="mobile-brand">
+      <span class="brand-sub">Scrapbook</span>
+      <span class="brand-title">A Little Place Called Us</span>
+    </div>
+    <button class="mobile-music-btn" id="mobileMusicBtn" aria-label="Musik Latar">
+      <i class="fa-solid fa-compact-disc mobile-disc-icon"></i>
+    </button>
+  </header>
+
+  <!-- Floating Persistent Music Player Widget (Accessible Anywhere, Desktop & Mobile) -->
+  <div class="floating-music-widget" id="floatingMusicWidget">
+    <button class="floating-music-card" id="floatingMusicBtn" aria-label="Kontrol Musik Latar">
+      <div class="floating-disc-wrap">
+        <i class="fa-solid fa-compact-disc floating-disc" id="floatingDisc"></i>
+        <span class="floating-music-pulse" aria-hidden="true"></span>
+      </div>
+      <div class="floating-music-info">
+        <span class="floating-title" id="floatingSongTitle">Background Melody</span>
+        <span class="floating-sub" id="floatingSongStatus"><i class="fa-solid fa-play"></i> Putar Musik Kapan Saja</span>
+      </div>
+      <div class="floating-action-icon">
+        <i class="fa-solid fa-play" id="floatingPlayIcon"></i>
+        <i class="fa-solid fa-pause" id="floatingPauseIcon" style="display:none;"></i>
+      </div>
+    </button>
+  </div>
+
+  <!-- Sidebar Overlay (Mobile) -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <div class="layout-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Mobile Close Button inside drawer -->
+      <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Tutup Menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="sidebar-header">
+        <div class="sidebar-stamp">
+          <i class="fa-solid fa-stamp stamp-icon-fa"></i>
+          <span class="stamp-text">EST. MEMORIES</span>
+        </div>
+        <h1 class="sidebar-title">A Little Place Called Us</h1>
+        <p class="sidebar-tagline">“Different songs, countless memories, one little story.”</p>
+        <div class="sidebar-divider">
+          <span><i class="fa-solid fa-heart"></i></span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <button class="nav-link active" data-target="home">
+              <span class="nav-icon"><i class="fa-solid fa-house-chimney-window"></i></span>
+              <span class="nav-text">Home</span>
+              <span class="nav-tape"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-target="gallery">
+              <span class="nav-icon"><i class="fa-solid fa-images"></i></span>
+              <span class="nav-text">Gallery</span>
+              <span class="nav-badge">8 Photos</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-target="letters">
+              <span class="nav-icon"><i class="fa-solid fa-envelope-open-text"></i></span>
+              <span class="nav-text">Letters</span>
+              <span class="nav-badge">3 Letters</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-target="story">
+              <span class="nav-icon"><i class="fa-solid fa-book-bookmark"></i></span>
+              <span class="nav-text">Our Story</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-target="music-corner">
+              <span class="nav-icon"><i class="fa-solid fa-compact-disc"></i></span>
+              <span class="nav-text">Between Nadin &amp; Hindia</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-target="little-things">
+              <span class="nav-icon"><i class="fa-solid fa-note-sticky"></i></span>
+              <span class="nav-text">Little Things</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-target="read-when">
+              <span class="nav-icon"><i class="fa-solid fa-envelope-circle-check"></i></span>
+              <span class="nav-text">Read This When...</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar Music Player Capsule -->
+      <div class="sidebar-footer">
+        <div class="music-capsule" id="musicCapsule">
+          <div class="vinyl-mini" id="miniVinyl">
+            <i class="fa-solid fa-compact-disc fa-spin-slow"></i>
+          </div>
+          <div class="music-info">
+            <span class="music-title-mini" id="musicTitleMini">Play Background Melody</span>
+            <span class="music-status" id="musicStatus">Acoustic Lo-Fi Vibes</span>
+          </div>
+          <button class="music-play-btn" id="musicToggleBtn" aria-label="Toggle Musik">
+            <i class="fa-solid fa-play play-icon"></i>
+            <i class="fa-solid fa-pause pause-icon" style="display:none;"></i>
+          </button>
+        </div>
+
+        <div class="sidebar-dedication">
+          <span>Handcrafted with warmth</span>
+          <strong>For Arini • Forever Bestie</strong>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <main class="main-content" id="mainContent">
+
+      <!-- ==============================================
+           SECTION 1: HOME
+           ============================================== -->
+      <section class="page-section active" id="home" data-title="Home">
+        <div class="scrapbook-container">
+          
+          <div class="home-hero">
+            <!-- Vintage Paper Header Badge -->
+            <div class="vintage-badge fade-in">
+              <span class="badge-tape"></span>
+              <i class="fa-solid fa-star badge-star"></i>
+              <span class="badge-txt">A Digital Scrapbook For Someone Special</span>
+              <i class="fa-solid fa-star badge-star"></i>
+            </div>
+
+            <h1 class="home-headline fade-in delay-1">
+              Happy Birthday, <br>
+              <span class="highlight-serif">My Childhood Best Friend!</span>
+            </h1>
+
+            <div class="friend-name-tag fade-in delay-2">
+              <i class="fa-solid fa-thumbtack pin-icon"></i>
+              <span class="dear-text">For my dearest:</span>
+              <span class="name-script">Arini <i class="fa-solid fa-wand-magic-sparkles"></i></span>
+            </div>
+
+            <!-- Main Scrapbook Composition -->
+            <div class="home-scrapbook-stage fade-in delay-3">
+              
+              <!-- Left decorative sticky note -->
+              <div class="scrapbook-sticky-note sticky-left">
+                <span class="tape-strip tape-diagonal"></span>
+                <p class="handwriting-text">
+                  “Dari masa kita main tanpa mikirin beban hidup, sampai sekarang kita belajar pelan-pelan jadi dewasa.”
+                </p>
+                <div class="doodle-flower">
+                  <i class="fa-solid fa-flower"></i> ✿ <i class="fa-solid fa-heart"></i>
+                </div>
+              </div>
+
+              <!-- Main Polaroid Photo -->
+              <div class="main-polaroid-wrapper">
+                <div class="polaroid-frame main-polaroid">
+                  <span class="tape-strip tape-center"></span>
+                  <div class="polaroid-img-box">
+                    <img src="assets/images/main-photo.jpg" alt="Foto Masa Kecil Kita Berdua" class="polaroid-img" id="homeMainImg">
+                    <div class="photo-overlay-vignette"></div>
+                  </div>
+                  <div class="polaroid-caption">
+                    <p class="caption-handwritten">The one who knows every single version of me.</p>
+                    <span class="caption-date">Est. Childhood • Growing Up Together</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right decorative postal stamp -->
+              <div class="scrapbook-stamp-card stamp-right">
+                <div class="stamp-inner">
+                  <i class="fa-solid fa-paper-plane stamp-icon"></i>
+                  <span class="stamp-country">AIR MAIL</span>
+                  <span class="stamp-value">BEST FRIEND</span>
+                  <span class="stamp-seal">SPECIAL EDITION</span>
+                </div>
+                <p class="stamp-note">“No matter how far life pulls us, you will always have a home in my story.”</p>
+              </div>
+
+            </div>
+
+            <!-- Animated Quote Card -->
+            <div class="quote-card fade-in delay-4">
+              <i class="fa-solid fa-quote-left quote-mark"></i>
+              <blockquote class="home-quote">
+                Another year older, but I'm still grateful that I got to grow up with you.
+              </blockquote>
+              <i class="fa-solid fa-quote-right quote-mark end"></i>
+              <div class="quote-sub-message">
+                Terima kasih sudah lahir ke dunia dan membagi begitu banyak bab kehidupanmu bersamaku.
+              </div>
+            </div>
+
+            <!-- Call to Actions & Direct Music Trigger -->
+            <div class="home-actions fade-in delay-5">
+              <button class="btn-vintage-primary" data-navigate="gallery">
+                <span>Explore Our Memories</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+              
+              <!-- Direct Music Button: Playable at any time -->
+              <button class="btn-vintage-music" id="heroMusicBtn">
+                <i class="fa-solid fa-music"></i>
+                <span id="heroMusicBtnText">Nyalakan Musik Latar ♫</span>
+              </button>
+
+              <button class="btn-vintage-secondary" data-navigate="letters">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Open Letters</span>
+              </button>
+            </div>
+
+            <!-- Mini decorative ticker -->
+            <div class="friendship-stats-ticker">
+              <div class="stat-pill">
+                <span class="stat-num">10+</span>
+                <span class="stat-lbl">Tahun Bertumbuh Bersama</span>
+              </div>
+              <div class="stat-dot">•</div>
+              <div class="stat-pill">
+                <span class="stat-num">∞</span>
+                <span class="stat-lbl">Tawa &amp; Curhatan Tengah Malam</span>
+              </div>
+              <div class="stat-dot">•</div>
+              <div class="stat-pill">
+                <span class="stat-num">1</span>
+                <span class="stat-lbl">Kisah yang Tak Pernah Usang</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==============================================
+           SECTION 2: GALLERY — OUR LITTLE MOMENTS
+           ============================================== -->
+      <section class="page-section" id="gallery" data-title="Gallery">
+        <div class="scrapbook-container">
+          
+          <div class="section-header">
+            <span class="section-tag"><i class="fa-solid fa-camera-retro"></i> Photobooth Moments</span>
+            <h2 class="section-title">Our Little Moments</h2>
+            <p class="section-subtitle">Delapan potret manis di photobooth, ribuan pesona cantik dan tawa menggemaskan yang selalu bikin kangen.</p>
+            <div class="floral-divider">
+              <span>❧ <i class="fa-solid fa-heart"></i> ❧</span>
+            </div>
+          </div>
+
+          <div class="gallery-instructions">
+            <span class="click-hint"><i class="fa-solid fa-lightbulb"></i> Klik pada setiap polaroid untuk melihat foto dalam ukuran penuh dan membaca cerita di baliknya.</span>
+          </div>
+
+          <!-- Pinterest / Scrapbook Masonry Grid (8 Landscape Photobooth Photos) -->
+          <div class="scrapbook-grid" id="galleryGrid">
+            
+            <!-- Photo 1 -->
+            <article class="polaroid-item tilt-left" data-index="0" data-src="assets/images/photo1.jpg" data-caption="Lihat deh senyummu di sini, manis dan teduh banget. Dari dulu sampai sekarang, kamu selalu punya aura menenangkan yang bikin siapa pun di dekatmu merasa nyaman." data-date="Photobooth • Senyum Paling Teduh">
+              <span class="washi-tape washi-top-left"></span>
+              <div class="polaroid-card">
+                <div class="polaroid-photo-wrap">
+                  <img src="assets/images/photo1.jpg" alt="Photobooth Bersama - Senyum Manis" class="polaroid-thumb" loading="lazy">
+                  <div class="hover-zoom-badge">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                  </div>
+                </div>
+                <div class="polaroid-meta">
+                  <span class="polaroid-num">#01</span>
+                  <p class="polaroid-text">Senyum manismu yang selalu bikin suasana jadi hangat dan tenang.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Photo 2 -->
+            <article class="polaroid-item tilt-right" data-index="1" data-src="assets/images/photo2.jpg" data-caption="Gaya santai dengan pose andalan, tapi pesonanya gak pernah main-main. Kamu tuh perpaduan sempurna antara sosok yang keren, mandiri, dan berhati sangat tulus." data-date="Photobooth • Cantik &amp; Keren">
+              <span class="washi-tape washi-top-right"></span>
+              <div class="polaroid-card">
+                <div class="polaroid-photo-wrap">
+                  <img src="assets/images/photo2.jpg" alt="Photobooth Bersama - Pose Keren" class="polaroid-thumb" loading="lazy">
+                  <div class="hover-zoom-badge">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                  </div>
+                </div>
+                <div class="polaroid-meta">
+                  <span class="polaroid-num">#02</span>
+                  <p class="polaroid-text">Definisi cewek manis dan keren yang pesonanya gak pernah luntur.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Photo 3 -->
+            <article class="polaroid-item tilt-left" data-index="2" data-src="assets/images/photo3.jpg" data-caption="Tolong ya, ini kenapa lucu dan menggemaskan banget? Mau pose bertopang dagu atau bibir dikerucutin begini, kamu tetap kelihatan sangat manis dan fotogenik!" data-date="Photobooth • Paling Menggemaskan">
+              <span class="washi-tape washi-center"></span>
+              <div class="polaroid-card">
+                <div class="polaroid-photo-wrap">
+                  <img src="assets/images/photo3.jpg" alt="Photobooth Bersama - Pose Gemas" class="polaroid-thumb" loading="lazy">
+                  <div class="hover-zoom-badge">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                  </div>
+                </div>
+                <div class="polaroid-meta">
+                  <span class="polaroid-num">#03</span>
+                  <p class="polaroid-text">Pose gemas bertabur pesona bidadari, imutnya kebangetan!</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Photo 4 -->
+            <article class="polaroid-item tilt-right" data-index="3" data-src="assets/images/photo4.jpg" data-caption="Sisi jahil dan lucumu yang selalu berhasil bikin hari-hariku penuh tawa. Gak peduli seabsurd apa posenya, kamu selalu terlihat cantik, ekspresif, dan menyenangkan." data-date="Photobooth • Sisi Jahil &amp; Cantik">
+              <span class="washi-tape washi-top-left"></span>
+              <div class="polaroid-card">
+                <div class="polaroid-photo-wrap">
+                  <img src="assets/images/photo4.jpg" alt="Photobooth Bersama - Pose Jahil" class="polaroid-thumb" loading="lazy">
+                  <div class="hover-zoom-badge">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                  </div>
+                </div>
+                <div class="polaroid-meta">
+                  <span class="polaroid-num">#04</span>
+                  <p class="polaroid-text">Mau pose anggun atau konyol begini, cantiknya tetap gak ada tandingannya.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Photo 5 -->
+            <article class="polaroid-item tilt-left" data-index="4" data-src="assets/images/photo5.jpg" data-caption="Kecantikanmu bukan cuma terpancar dari wajah manismu, tapi juga dari ketulusan hatimu yang luar biasa. Bangga dan bersyukur banget punya sahabat secantik dan sebaik kamu, Arini." data-date="Photobooth • Bidadari Favorit">
+              <span class="washi-tape washi-top-right"></span>
+              <div class="polaroid-card">
+                <div class="polaroid-photo-wrap">
+                  <img src="assets/images/photo5.jpg" alt="Photobooth Bersama - Anggun &amp; Manis" class="polaroid-thumb" loading="lazy">
+                  <div class="hover-zoom-badge">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                  </div>
+                </div>
+                <div class="polaroid-meta">
+                  <span class="polaroid-num">#05</span>
+                  <p class="polaroid-text">Cantik, berhati baik, dan selalu jadi sosok favorit di duniaku.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Photo 6 -->
+            <article class="polaroid-item tilt-right" data-index="5" data-src="assets/images/photo6.jpg" data-caption="Lihat ekspresi usil dan tawamu di sini, gemas banget! Kamu adalah orang yang gak pernah jaim dan selalu bisa membawa kebahagiaan murni di sekelilingmu. Tetap jadi sosok yang ceria dan penuh warna seperti ini ya, Arini!" data-date="Photobooth • Tawa Paling Ceria">
+              <span class="washi-tape washi-top-left"></span>
+              <div class="polaroid-card">
+                <div class="polaroid-photo-wrap">
+                  <img src="assets/images/photo6.jpg" alt="Photobooth Bersama - Tawa Lepas &amp; Usil" class="polaroid-thumb" loading="lazy">
+                  <div class="hover-zoom-badge">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                  </div>
+                </div>
+                <div class="polaroid-meta">
+                  <span class="polaroid-num">#06</span>
+                  <p class="polaroid-text">Tawa lepas dan ekspresi ceriamu yang selalu bikin hari-hari jadi berwarna.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Photo 7 -->
+            <article class="polaroid-item tilt-left" data-index="6" data-src="assets/images/photo7.jpg" data-caption="Pakai bando beruang lucu begini, tingkat keimutanmu langsung melonjak tinggi! Pesona manismu itu alami banget, gak pernah dibuat-buat. Senang banget bisa selalu bertingkah seru dan bahagia bareng kamu." data-date="Photobooth • Manisnya Kelewatan">
+              <span class="washi-tape washi-top-right"></span>
+              <div class="polaroid-card">
+                <div class="polaroid-photo-wrap">
+                  <img src="assets/images/photo7.jpg" alt="Photobooth Bersama - Bando Beruang Lucu" class="polaroid-thumb" loading="lazy">
+                  <div class="hover-zoom-badge">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                  </div>
+                </div>
+                <div class="polaroid-meta">
+                  <span class="polaroid-num">#07</span>
+                  <p class="polaroid-text">Bando beruang dan pose seru, tapi tetep kelihatan paling manis seisi dunia.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Photo 8 -->
+            <article class="polaroid-item tilt-right" data-index="7" data-src="assets/images/photo8.jpg" data-caption="Foto penutup yang sempurna! Pose duck face andalanmu yang selalu juara. Di mataku, kamu akan selalu jadi cewek paling berharga, luar biasa cantik, dan sahabat terbaik yang pernah kumiliki. Selamat ulang tahun, Arini!" data-date="Photobooth • Sempurna &amp; Tiada Dua">
+              <span class="washi-tape washi-center"></span>
+              <div class="polaroid-card">
+                <div class="polaroid-photo-wrap">
+                  <img src="assets/images/photo8.jpg" alt="Photobooth Bersama - Pose Duck Face Gemas" class="polaroid-thumb" loading="lazy">
+                  <div class="hover-zoom-badge">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                  </div>
+                </div>
+                <div class="polaroid-meta">
+                  <span class="polaroid-num">#08</span>
+                  <p class="polaroid-text">Pose peace dan duck face andalan—cantik, menggemaskan, dan tiada duanya.</p>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==============================================
+           SECTION 3: LETTERS — LETTERS FOR YOU
+           ============================================== -->
+      <section class="page-section" id="letters" data-title="Letters">
+        <div class="scrapbook-container">
+          
+          <div class="section-header">
+            <span class="section-tag"><i class="fa-solid fa-envelope-open-text"></i> Digital Envelopes</span>
+            <h2 class="section-title">Letters For You</h2>
+            <p class="section-subtitle">Tiga pucuk surat bersegel lilin yang kutulis khusus untukmu. Klik amplop untuk membukanya pelan-pelan.</p>
+            <div class="floral-divider">
+              <span>❧ <i class="fa-solid fa-heart"></i> ❧</span>
+            </div>
+          </div>
+
+          <div class="envelopes-wrapper">
+
+            <!-- Envelope 1: Birthday Letter -->
+            <div class="envelope-item" data-letter="birthday">
+              <div class="envelope-box">
+                <div class="envelope-flap"></div>
+                <div class="wax-seal seal-burgundy">
+                  <i class="fa-solid fa-cake-candles seal-icon"></i>
+                </div>
+                <div class="envelope-pocket">
+                  <span class="envelope-stamp-mini">PAR AVION</span>
+                  <div class="envelope-front-text">
+                    <span class="env-to">To: Arini</span>
+                    <span class="env-tag">A Birthday Letter</span>
+                  </div>
+                </div>
+                <!-- Peeking letter sheet -->
+                <div class="letter-sheet-peek">
+                  <span class="peek-line"></span>
+                  <span class="peek-line short"></span>
+                </div>
+              </div>
+              <div class="envelope-label">
+                <h3>A Birthday Letter</h3>
+                <p>Selamat bertambah usia, sosok terfavorit di duniaku.</p>
+                <button class="btn-open-envelope">
+                  <span>Buka Surat Ini</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Envelope 2: Thank You Letter -->
+            <div class="envelope-item" data-letter="thankyou">
+              <div class="envelope-box">
+                <div class="envelope-flap"></div>
+                <div class="wax-seal seal-rose">
+                  <i class="fa-solid fa-hand-holding-heart seal-icon"></i>
+                </div>
+                <div class="envelope-pocket">
+                  <span class="envelope-stamp-mini">GRATITUDE</span>
+                  <div class="envelope-front-text">
+                    <span class="env-to">To: Arini</span>
+                    <span class="env-tag">Thank You Letter</span>
+                  </div>
+                </div>
+                <div class="letter-sheet-peek">
+                  <span class="peek-line"></span>
+                  <span class="peek-line short"></span>
+                </div>
+              </div>
+              <div class="envelope-label">
+                <h3>Thank You Letter</h3>
+                <p>Terima kasih untuk kehadiranmu yang tulus tanpa syarat.</p>
+                <button class="btn-open-envelope">
+                  <span>Buka Surat Ini</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Envelope 3: Letter for Our Future -->
+            <div class="envelope-item" data-letter="future">
+              <div class="envelope-box">
+                <div class="envelope-flap"></div>
+                <div class="wax-seal seal-gold">
+                  <i class="fa-solid fa-star seal-icon"></i>
+                </div>
+                <div class="envelope-pocket">
+                  <span class="envelope-stamp-mini">FOREVER</span>
+                  <div class="envelope-front-text">
+                    <span class="env-to">To: Arini</span>
+                    <span class="env-tag">A Letter for Our Future</span>
+                  </div>
+                </div>
+                <div class="letter-sheet-peek">
+                  <span class="peek-line"></span>
+                  <span class="peek-line short"></span>
+                </div>
+              </div>
+              <div class="envelope-label">
+                <h3>A Letter for Our Future</h3>
+                <p>Sebuah janji kecil untuk tahun-tahun yang akan datang.</p>
+                <button class="btn-open-envelope">
+                  <span>Buka Surat Ini</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Scrapbook Quote -->
+          <div class="letters-footer-note">
+            <span class="handwriting-text">“Words may fade into air, but written letters carry the heartbeat of the moment.”</span>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==============================================
+           SECTION 4: OUR STORY — FROM THEN TO NOW
+           ============================================== -->
+      <section class="page-section" id="story" data-title="Our Story">
+        <div class="scrapbook-container">
+          
+          <div class="section-header">
+            <span class="section-tag"><i class="fa-solid fa-clock-rotate-left"></i> Timeline of Us</span>
+            <h2 class="section-title">From Then To Now</h2>
+            <p class="section-subtitle">Garis waktu perjalanan dua orang anak kecil yang memutuskan untuk saling menggenggam tangan melewati setiap babak kehidupan.</p>
+            <div class="floral-divider">
+              <span>❧ <i class="fa-solid fa-heart"></i> ❧</span>
+            </div>
+          </div>
+
+          <!-- Vertical Timeline with Scrapbook Cards -->
+          <div class="timeline-tree">
+            <div class="timeline-stem-line" aria-hidden="true"></div>
+
+            <!-- Milestone 1: The Beginning -->
+            <div class="timeline-node node-left scroll-reveal">
+              <div class="timeline-marker">
+                <i class="fa-solid fa-shapes marker-icon"></i>
+              </div>
+              <div class="timeline-card">
+                <span class="washi-tape washi-top-right"></span>
+                <div class="card-stamp-badge">CHAPTER 01</div>
+                <span class="timeline-era">The Beginning • SD &amp; Pesantren</span>
+                <h3 class="timeline-heading">“Kamu Duduk Sama Siapa, Ris?”</h3>
+                <div class="timeline-date-tag"><i class="fa-regular fa-calendar"></i> Kelas 2 SD — Kelas 6 SD</div>
+                <p class="timeline-desc">
+                  Masih ingat waktu aku baru pindah sekolah saat kelas 2 SD? Aku duduk di sebelah sepupumu, lalu kamu sesekali datang mampir ke meja kami sambil bertanya kalimat itu. Dari kelas 3 SD kita makin dekat apalagi setelah masuk pesantren bareng. Sampai kelas 6, setiap ada foto bersama posisi kita selalu berdampingan.
+                </p>
+                <div class="timeline-footnote">
+                  <span>✦ Momen kunci:</span> Berawal dari anak baru pindah sekolah dan mampir ke meja kelas, berlanjut jadi teman seumur hidup.
+                </div>
+              </div>
+            </div>
+
+            <!-- Milestone 2: Growing Up -->
+            <div class="timeline-node node-right scroll-reveal">
+              <div class="timeline-marker">
+                <i class="fa-solid fa-video marker-icon"></i>
+              </div>
+              <div class="timeline-card">
+                <span class="washi-tape washi-top-left"></span>
+                <div class="card-stamp-badge">CHAPTER 02</div>
+                <span class="timeline-era">Growing Up • Era SMP &amp; Konten COVID</span>
+                <h3 class="timeline-heading">Jedag-Jedug &amp; Video Transisi Absurd</h3>
+                <div class="timeline-date-tag"><i class="fa-regular fa-calendar"></i> Masa SMP &amp; Masa Karantina</div>
+                <p class="timeline-desc">
+                  Masa SMP saat pandemi COVID jadi masa paling random! Kita sering banget bikin video bareng, mulai dari jedag-jedug sampai berbagai macam video transisi yang waktu itu rasanya keren banget. Walau sekarang kalau dilihat lagi bikin cringe sendiri, tapi selalu ada saja ide untuk bikin video berdua dan tertawa lepas.
+                </p>
+                <div class="timeline-footnote">
+                  <span>✦ Momen kunci:</span> Nggak peduli konsepnya apa, yang penting bisa seru-seruan dan bikin video berdua.
+                </div>
+              </div>
+            </div>
+
+            <!-- Milestone 3: The Memories -->
+            <div class="timeline-node node-left scroll-reveal">
+              <div class="timeline-marker">
+                <i class="fa-solid fa-graduation-cap marker-icon"></i>
+              </div>
+              <div class="timeline-card">
+                <span class="washi-tape washi-top-right"></span>
+                <div class="card-stamp-badge">CHAPTER 03</div>
+                <span class="timeline-era">The Memories • Masa SMA &amp; Cerita Kelas</span>
+                <h3 class="timeline-heading">Tidur di Kelas, Catatan Lambat, &amp; Saling Nyuapin</h3>
+                <div class="timeline-date-tag"><i class="fa-regular fa-calendar"></i> Putih Abu-Abu &amp; Bangku Kelas</div>
+                <p class="timeline-desc">
+                  Masa SMA yang penuh kenangan absurd: duduk sebangku dan kadang tidur bareng di kelas, kamu yang hobi ngemil pas guru nerangin (terutama jam pelajaran agama!), dan kamu yang gak sabaran lihat aku makan kelamaan sampai akhirnya nyuapin sendiri. Padahal kamu punya bakat menulis cerita dan AU Twitter yang puitis, tapi kalau urusan mencatat materi di kelas selalu satu huruf demi satu huruf!
+                </p>
+                <div class="timeline-footnote">
+                  <span>✦ Momen kunci:</span> Dari drama catatan kelas sampai kebiasaan saling menjahili yang bikin masa sekolah begitu berkesan.
+                </div>
+              </div>
+            </div>
+
+            <!-- Milestone 4: Today -->
+            <div class="timeline-node node-right scroll-reveal">
+              <div class="timeline-marker">
+                <i class="fa-solid fa-cake-candles marker-icon"></i>
+              </div>
+              <div class="timeline-card highlight-card">
+                <span class="washi-tape washi-center"></span>
+                <div class="card-stamp-badge special">CHAPTER 04</div>
+                <span class="timeline-era">Today &amp; Beyond • Hari Ini &amp; Masa Depan</span>
+                <h3 class="timeline-heading">Dunia Berbeda, Satu Cerita Berdampingan</h3>
+                <div class="timeline-date-tag"><i class="fa-regular fa-calendar"></i> Hari Ulang Tahunmu &amp; Seterusnya</div>
+                <p class="timeline-desc">
+                  Dari dulu selera kita berbeda: anime vs drama Thailand, BL, dan NCT. Sekarang selera musik pun punya dunia masing-masing: Nadin Amizah vs Hindia. Dari kamu yang dulu tergila-gila cowok virtual hingga akhirnya menemukan cinta di dunia nyata, dan dari yang dulu nggak ngopi sekarang jadi suka ngopi. Dunia boleh berbeda, tapi cerita kita tetap melangkah bersama.
+                </p>
+                <div class="timeline-footnote">
+                  <span>✦ Momen kunci:</span> “Different songs, countless memories, one little story.” Selamat ulang tahun sahabat kecilku!
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Timeline Quote Box -->
+          <div class="timeline-quote-box">
+            <i class="fa-solid fa-quote-left quote-icon"></i>
+            <p class="handwriting-text">
+              “Time flies, seasons change, people come and go. But I'm blessed that you stayed.”
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==============================================
+           SECTION 6: BETWEEN NADIN & HINDIA
+           ============================================== -->
+      <section class="page-section" id="music-corner" data-title="Between Nadin & Hindia">
+        <div class="scrapbook-container">
+          
+          <div class="section-header">
+            <span class="section-tag"><i class="fa-solid fa-headphones"></i> Musical Soulmates</span>
+            <h2 class="section-title">Between Nadin &amp; Hindia</h2>
+            <p class="section-subtitle">“Different songs, countless memories, one little story.”</p>
+            <div class="floral-divider">
+              <span>❧ <i class="fa-solid fa-music"></i> ❧</span>
+            </div>
+          </div>
+
+          <!-- Dual Musical Worlds Split -->
+          <div class="music-dual-wrapper">
+            
+            <!-- Her World: Nadin Amizah -->
+            <div class="music-world-card world-her">
+              <span class="washi-tape washi-top-left washi-soft-pink"></span>
+              <div class="world-header">
+                <div class="world-badge"><i class="fa-solid fa-sparkles"></i> HER WORLD</div>
+                <h3 class="world-artist">Nadin Amizah</h3>
+                <p class="world-tagline">Lembut, dreamy, puitis, dan penuh kehangatan.</p>
+              </div>
+
+              <div class="world-artwork-box">
+                <img src="assets/images/album-nadin.jpg" alt="Artwork Nadin Amizah" class="world-cover" loading="lazy">
+                <div class="artwork-vinyl-peeking">
+                  <div class="vinyl-disc vinyl-nadin"></div>
+                </div>
+              </div>
+
+              <div class="world-description">
+                <p>
+                  Selera musikmu yang sehangat pelukan di sore mendung. Kamu selalu menemukan keindahan dalam bait-bait puisi Nadin yang tenang, membiarkan setiap nadanya menyembuhkan lelah dan merayakan kerentanan dengan begitu anggun.
+                </p>
+              </div>
+
+              <div class="world-tracklist">
+                <h4 class="tracklist-title"><i class="fa-solid fa-music"></i> Lagu Favorit Sahabat (Klik lagu untuk dengarkan aslinya):</h4>
+                <ul class="song-list">
+                  <li class="song-item active" data-song-key="nadin-bertaut" data-audio="assets/music/nadin-bertaut.m4a">
+                    <span class="song-idx">01</span>
+                    <div class="song-details">
+                      <strong class="song-name">Bertaut</strong>
+                      <span class="song-note">Tentang ikatan batin yang tak butuh banyak kata.</span>
+                    </div>
+                    <button class="song-play-pill" aria-label="Putar Lagu Bertaut">
+                      <i class="fa-solid fa-play pill-icon"></i>
+                      <span class="pill-label">Putar</span>
+                    </button>
+                    <span class="song-time">05:16</span>
+                  </li>
+                  <li class="song-item" data-song-key="nadin-rayuan" data-audio="assets/music/nadin-rayuan.m4a">
+                    <span class="song-idx">02</span>
+                    <div class="song-details">
+                      <strong class="song-name">Rayuan Perempuan Gila</strong>
+                      <span class="song-note">Sisi jujur dan rentan yang selalu kamu pahami.</span>
+                    </div>
+                    <button class="song-play-pill" aria-label="Putar Lagu Rayuan Perempuan Gila">
+                      <i class="fa-solid fa-play pill-icon"></i>
+                      <span class="pill-label">Putar</span>
+                    </button>
+                    <span class="song-time">04:32</span>
+                  </li>
+                  <li class="song-item" data-song-key="nadin-sorai" data-audio="assets/music/nadin-sorai.m4a">
+                    <span class="song-idx">03</span>
+                    <div class="song-details">
+                      <strong class="song-name">Sorai</strong>
+                      <span class="song-note">Merayakan pertemuan dan keikhlasan yang tulus.</span>
+                    </div>
+                    <button class="song-play-pill" aria-label="Putar Lagu Sorai">
+                      <i class="fa-solid fa-play pill-icon"></i>
+                      <span class="pill-label">Putar</span>
+                    </button>
+                    <span class="song-time">04:20</span>
+                  </li>
+                  <li class="song-item" data-song-key="nadin-beranjak" data-audio="assets/music/nadin-beranjak.m4a">
+                    <span class="song-idx">04</span>
+                    <div class="song-details">
+                      <strong class="song-name">Beranjak Dewasa</strong>
+                      <span class="song-note">Lagu kita tiap kali merasa dunia berputar terlalu cepat.</span>
+                    </div>
+                    <button class="song-play-pill" aria-label="Putar Lagu Beranjak Dewasa">
+                      <i class="fa-solid fa-play pill-icon"></i>
+                      <span class="pill-label">Putar</span>
+                    </button>
+                    <span class="song-time">04:55</span>
+                  </li>
+                  <li class="song-item" data-song-key="nadin-dirayakan" data-audio="assets/music/nadin-dirayakan.m4a">
+                    <span class="song-idx">05</span>
+                    <div class="song-details">
+                      <strong class="song-name">Semua Aku Dirayakan</strong>
+                      <span class="song-note">Karena bersamamu, aku selalu merasa dirayakan seutuhnya.</span>
+                    </div>
+                    <button class="song-play-pill" aria-label="Putar Lagu Semua Aku Dirayakan">
+                      <i class="fa-solid fa-play pill-icon"></i>
+                      <span class="pill-label">Putar</span>
+                    </button>
+                    <span class="song-time">04:48</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- My World: Hindia -->
+            <div class="music-world-card world-me">
+              <span class="washi-tape washi-top-right washi-slate"></span>
+              <div class="world-header">
+                <div class="world-badge"><i class="fa-solid fa-city"></i> MY WORLD</div>
+                <h3 class="world-artist">Hindia (Baskara)</h3>
+                <p class="world-tagline">Minimalis, reflektif, jujur, dan sedikit moody.</p>
+              </div>
+
+              <div class="world-artwork-box">
+                <img src="assets/images/album-hindia.jpg" alt="Artwork Hindia" class="world-cover" loading="lazy">
+                <div class="artwork-vinyl-peeking">
+                  <div class="vinyl-disc vinyl-hindia"></div>
+                </div>
+              </div>
+
+              <div class="world-description">
+                <p>
+                  Selera musikku yang lebih lugas dan penuh renungan realitas kota. Lagu-lagu Hindia yang menemani malam-malam overthinking, tentang lelah yang tak terucap, dan keberanian kecil untuk tetap melangkah walau dunia sedang tidak baik-baik saja.
+                </p>
+              </div>
+
+              <div class="world-tracklist">
+                <h4 class="tracklist-title"><i class="fa-solid fa-music"></i> Lagu Favoritku (Klik lagu untuk dengarkan aslinya):</h4>
+                <ul class="song-list">
+                  <li class="song-item" data-song-key="hindia-evaluasi" data-audio="assets/music/hindia-evaluasi.m4a">
+                    <span class="song-idx">01</span>
+                    <div class="song-details">
+                      <strong class="song-name">Evaluasi</strong>
+                      <span class="song-note">Pengingat untuk bernapas saat semuanya terasa terlalu banyak.</span>
+                    </div>
+                    <button class="song-play-pill" aria-label="Putar Lagu Evaluasi">
+                      <i class="fa-solid fa-play pill-icon"></i>
+                      <span class="pill-label">Putar</span>
+                    </button>
+                    <span class="song-time">03:24</span>
+                  </li>
+                  <li class="song-item" data-song-key="hindia-secukupnya" data-audio="assets/music/hindia-secukupnya.m4a">
+                    <span class="song-idx">02</span>
+                    <div class="song-details">
+                      <strong class="song-name">Secukupnya</strong>
+                      <span class="song-note">Kenyataan bahwa hidup kadang memang seberantakan itu.</span>
+                    </div>
+                    <button class="song-play-pill" aria-label="Putar Lagu Secukupnya">
+                      <i class="fa-solid fa-play pill-icon"></i>
+                      <span class="pill-label">Putar</span>
+                    </button>
+                    <span class="song-time">03:28</span>
+                  </li>
+                  <li class="song-item" data-song-key="hindia-rumah" data-audio="assets/music/hindia-rumah.m4a">
+                    <span class="song-idx">03</span>
+                    <div class="song-details">
+                      <strong class="song-name">Rumah ke Rumah</strong>
+                      <span class="song-note">Tentang siapa yang singgah dan siapa yang menetap.</span>
+                    </div>
+                    <button class="song-play-pill" aria-label="Putar Lagu Rumah ke Rumah">
+                      <i class="fa-solid fa-play pill-icon"></i>
+                      <span class="pill-label">Putar</span>
+                    </button>
+                    <span class="song-time">04:37</span>
+                  </li>
+                  <li class="song-item" data-song-key="hindia-membasuh" data-audio="assets/music/hindia-membasuh.m4a">
+                    <span class="song-idx">04</span>
+                    <div class="song-details">
+                      <strong class="song-name">Membasuh</strong>
+                      <span class="song-note">Membersihkan luka bersama orang yang tepat.</span>
+                    </div>
+                    <button class="song-play-pill" aria-label="Putar Lagu Membasuh">
+                      <i class="fa-solid fa-play pill-icon"></i>
+                      <span class="pill-label">Putar</span>
+                    </button>
+                    <span class="song-time">05:12</span>
+                  </li>
+                  <li class="song-item" data-song-key="hindia-berdansalah" data-audio="assets/music/hindia-berdansalah.m4a">
+                    <span class="song-idx">05</span>
+                    <div class="song-details">
+                      <strong class="song-name">Berdansalah, Karir Ini Tak Ada Artinya</strong>
+                      <span class="song-note">Pengingat agar tidak terlalu keras pada diri sendiri.</span>
+                    </div>
+                    <button class="song-play-pill" aria-label="Putar Lagu Berdansalah">
+                      <i class="fa-solid fa-play pill-icon"></i>
+                      <span class="pill-label">Putar</span>
+                    </button>
+                    <span class="song-time">04:08</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- OUR SONG Aesthetic Turntable Player -->
+          <div class="our-song-player-card">
+            <span class="tape-strip tape-center"></span>
+            
+            <div class="our-song-header">
+              <span class="badge-our-song"><i class="fa-solid fa-compact-disc"></i> OUR HARMONY</span>
+              <h3 class="our-song-title">“Different songs, countless memories, one little story.”</h3>
+              <p class="our-song-subtitle">Dua selera yang berbeda, dipertemukan dalam satu rasa hangat yang sama.</p>
+            </div>
+
+            <div class="turntable-player-layout">
+              <!-- Vinyl Record Turntable -->
+              <div class="turntable-box">
+                <div class="vinyl-platter" id="vinylPlatter">
+                  <div class="vinyl-center-label">
+                    <i class="fa-solid fa-compact-disc label-star"></i>
+                    <span class="label-title">A Little Place Called Us</span>
+                    <span class="label-sub">Special Acoustic Mix</span>
+                  </div>
+                </div>
+                <!-- Tonearm -->
+                <div class="turntable-tonearm" id="turntableTonearm">
+                  <div class="tonearm-head"></div>
+                </div>
+              </div>
+
+              <!-- Player Controls & Equalizer -->
+              <div class="turntable-controls">
+                <div class="current-track-meta">
+                  <span class="now-playing-tag">NOW PLAYING:</span>
+                  <h4 class="now-playing-title" id="nowPlayingTitle">Bertaut &amp; Evaluasi (Acoustic Friendship Melody)</h4>
+                  <p class="now-playing-artist" id="nowPlayingArtist">Nadin Amizah &times; Hindia Mashup</p>
+                </div>
+
+                <!-- Animated Equalizer Wave -->
+                <div class="audio-equalizer" id="audioEqualizer">
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                </div>
+
+                <!-- Scrubber -->
+                <div class="player-scrubber-wrap" id="playerScrubberWrap">
+                  <div class="player-scrubber-bar" id="playerScrubberBar"></div>
+                </div>
+                <div class="player-time-row">
+                  <span id="playerCurrentTime">00:00</span>
+                  <span id="playerTotalTime">03:45</span>
+                </div>
+
+                <!-- Buttons -->
+                <div class="player-buttons-row">
+                  <button class="player-btn btn-prev" id="playerPrevBtn" aria-label="Lagu Sebelumnya">
+                    <i class="fa-solid fa-backward-step"></i>
+                  </button>
+
+                  <button class="player-btn btn-play-main" id="playerPlayMainBtn" aria-label="Putar Musik">
+                    <i class="fa-solid fa-play icon-play"></i>
+                    <i class="fa-solid fa-pause icon-pause" style="display:none;"></i>
+                  </button>
+
+                  <button class="player-btn btn-next" id="playerNextBtn" aria-label="Lagu Selanjutnya">
+                    <i class="fa-solid fa-forward-step"></i>
+                  </button>
+                </div>
+
+                <div class="audio-notice">
+                  <span><i class="fa-solid fa-circle-play"></i> Kamu bisa menyalakan atau menjeda lagu ini kapan saja dari tombol di atas maupun widget melayang di kanan bawah layar.</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==============================================
+           SECTION 7: LITTLE THINGS
+           ============================================== -->
+      <section class="page-section" id="little-things" data-title="Little Things">
+        <div class="scrapbook-container">
+          
+          <div class="section-header">
+            <span class="section-tag"><i class="fa-solid fa-thumbtack"></i> Scrapbook Notes</span>
+            <h2 class="section-title">Little Things I Remember About You</h2>
+            <p class="section-subtitle">“Because the biggest love is hidden in the smallest, sweetest details.”</p>
+            <div class="floral-divider">
+              <span>❧ <i class="fa-solid fa-heart"></i> ❧</span>
+            </div>
+          </div>
+
+          <div class="little-things-intro">
+            <span class="click-hint"><i class="fa-solid fa-lightbulb"></i> Klik setiap kartu catatan di bawah untuk membuka kenangan dan detail kecil yang selalu kuingat tentangmu.</span>
+          </div>
+
+          <!-- Scrapbook Cards Grid (Authentic Memories & Habits) -->
+          <div class="cards-scrapbook-grid">
+            
+            <!-- Card 1: THE BEGINNING -->
+            <div class="scrap-card card-yellow-paper" data-card="beginning">
+              <i class="fa-solid fa-thumbtack card-pin"></i>
+              <div class="card-tag">#01 • THE BEGINNING</div>
+              <h3 class="card-title">Your First Little Question</h3>
+              <p class="card-preview">Dulu kita bahkan belum benar-benar saling mengenal...</p>
+              <div class="card-hidden-content">
+                <hr class="card-divider">
+                <div class="handwriting-text">
+                  <p>“Masih ingat nggak waktu aku baru pindah sekolah saat kelas 2 SD? Aku duduk di sebelah sepupumu, lalu kamu sesekali datang menghampiri meja kami sambil bertanya, 'Kamu duduk sama siapa, Ris?' WKWKWK. Dulu mungkin itu cuma pertanyaan biasa buatmu, tapi siapa sangka orang yang dulu cuma sesekali mampir ke meja kami akhirnya jadi salah satu orang yang paling banyak punya cerita bersamaku.</p>
+                  <p>Kita mulai semakin dekat saat kelas 3 SD, apalagi setelah memasuki sekolah pesantren. Semakin naik kelas, semakin banyak cerita yang kita punya. Sampai kelas 6, setiap ada foto bersama, entah bagaimana posisi kita selalu bersebelahan. Sepertinya dari dulu memang sudah terbiasa berdampingan, bahkan sebelum menyadari betapa dekatnya kita nantinya.</p>
+                  <p>Kalau dipikir-pikir, lucu juga ya. Semuanya dimulai dari seorang anak yang baru pindah sekolah dan pertanyaan sederhana di depan meja kelas.”</p>
+                </div>
+              </div>
+              <button class="btn-card-toggle">
+                <span>Buka Catatan</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <!-- Card 2: PARTNERS IN CRIME -->
+            <div class="scrap-card card-pink-paper" data-card="crime">
+              <span class="washi-tape washi-top-right"></span>
+              <div class="card-tag">#02 • PARTNERS IN CRIME</div>
+              <h3 class="card-title">Our Favorite Kind of Chaos</h3>
+              <p class="card-preview">Dari saling mengejek sampai menggosipkan hal-hal random...</p>
+              <div class="card-hidden-content">
+                <hr class="card-divider">
+                <div class="handwriting-text">
+                  <p>“Sepertinya kita memang punya bakat khusus untuk saling mengejek satu sama lain. Dari zaman SD, SMP, sampai SMA, selalu ada saja bahan untuk dijadikan candaan. Kadang saling membully, kadang bergosip, kadang cuma menertawakan sesuatu yang mungkin orang lain nggak akan mengerti.</p>
+                  <p>Entah bagaimana, hal-hal receh seperti itu selalu terasa lebih seru kalau dilakukan bersamamu. Kita juga pernah melewati banyak fase dengan kesukaan yang berbeda-beda. Aku dengan anime kesukaanku, sementara kamu pernah berada di era drama Thailand dan BL. Lalu ketika SMA, aku masih setia dengan anime, sedangkan kamu mulai memasuki dunia K-pop, terutama NCT.</p>
+                  <p>Sekarang urusan musik pun kita punya dunia masing-masing. Kamu dengan lagu-lagu Nadin Amizah dan aku dengan Hindia.</p>
+                  <p>Dan satu hal yang nggak boleh dilupakan, kamu itu dari dulu punya bakat luar biasa untuk tergila-gila sama cowok virtual. WKWKWK. Entah sudah berapa banyak karakter fiksi yang pernah berhasil mencuri perhatianmu. Untungnya sekarang kamu sudah menemukan cinta di dunia nyata. Akhirnya nggak cuma mengagumi cowok dari balik layar, ya? HAHAHA.</p>
+                  <p>Ternyata selera boleh berbeda, dunia boleh berbeda, tapi cerita kita tetap berjalan berdampingan.”</p>
+                </div>
+              </div>
+              <button class="btn-card-toggle">
+                <span>Buka Catatan</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <!-- Card 3: OUR CONTENT ERA -->
+            <div class="scrap-card card-kraft-paper" data-card="content-era">
+              <span class="card-tape-corner"></span>
+              <div class="card-tag">#03 • OUR CONTENT ERA</div>
+              <h3 class="card-title">The COVID Video Chronicles</h3>
+              <p class="card-preview">Jedag-jedug, transisi, dan video-video random zaman SMP...</p>
+              <div class="card-hidden-content">
+                <hr class="card-divider">
+                <div class="handwriting-text">
+                  <p>“Kalau mengingat masa SMP saat COVID, rasanya pengin ketawa sekaligus malu sendiri. Kita sering banget bikin video bersama, mulai dari jedag-jedug sampai berbagai macam video transisi yang waktu itu rasanya keren banget. HAHAHA.</p>
+                  <p>Nggak peduli konsepnya apa, selalu ada saja ide untuk bikin video lagi. Rasanya setiap momen bisa dijadikan bahan untuk membuat konten bersama.</p>
+                  <p>Mungkin sekarang kalau melihat hasil videonya lagi kita bakal merasa cringe sendiri, tapi justru itu yang bikin kenangannya berharga. Kita pernah berada di masa ketika hal sesederhana membuat video bersama bisa jadi kesenangan tersendiri.</p>
+                  <p>Kalau suatu hari kita membuka lagi video-video lama itu, semoga kita masih bisa tertawa dengan cara yang sama seperti dulu.”</p>
+                </div>
+              </div>
+              <button class="btn-card-toggle">
+                <span>Buka Catatan</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <!-- Card 4: HER LITTLE LITERARY WORLD -->
+            <div class="scrap-card card-cream-paper" data-card="literary-world">
+              <i class="fa-solid fa-thumbtack card-pin"></i>
+              <div class="card-tag">#04 • HER LITTLE LITERARY WORLD</div>
+              <h3 class="card-title">A Girl Made of Words</h3>
+              <p class="card-preview">Punya banyak cerita di kepala, pandai merangkai kata, tapi selalu kehabisan waktu saat mencatat pelajaran...</p>
+              <div class="card-hidden-content">
+                <hr class="card-divider">
+                <div class="handwriting-text">
+                  <p>“Ada satu sisi dirimu yang selalu menarik buatku, yaitu kecintaanmu sama dunia tulisan. Dulu waktu SMA kamu suka banget baca AU di Twitter, tenggelam dalam cerita-cerita yang entah berapa banyak sudah kamu baca.</p>
+                  <p>Kamu juga punya kemampuan merangkai kata yang bagus banget. Bisa bikin cerpen, menyusun kalimat puitis, dan menuangkan sesuatu ke dalam tulisan dengan cara yang indah. Kadang aku sampai berpikir, kok bisa ya seseorang punya banyak sekali kata-kata indah di kepalanya?</p>
+                  <p>Kamu itu seperti punya dunia sendiri yang dipenuhi cerita, kalimat, dan imajinasi. Tapi lucunya, semua kemampuan sastra itu seolah menghilang ketika tiba waktunya mencatat pelajaran di kelas. WKWKWK.</p>
+                  <p>Kalau menulis cerita bisa seindah itu, kenapa mencatat materi harus satu huruf demi satu huruf? Guru sudah menjelaskan panjang lebar, sementara tulisanmu masih berjuang mengejar materi. HAHAHA.</p>
+                  <p>Tapi itulah salah satu hal yang membuatmu unik. Seseorang yang bisa begitu pandai merangkai kata, tetapi kalau urusan mencatat di kelas ternyata punya kecepatan tersendiri.”</p>
+                </div>
+              </div>
+              <button class="btn-card-toggle">
+                <span>Buka Catatan</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <!-- Card 5: CLASSROOM MEMORIES -->
+            <div class="scrap-card card-rose-paper" data-card="classroom-memories">
+              <span class="washi-tape washi-center"></span>
+              <div class="card-tag">#05 • CLASSROOM MEMORIES</div>
+              <h3 class="card-title">Sleeping, Snacking &amp; Slow Notes</h3>
+              <p class="card-preview">Masa SMA, tidur di kelas, makan saat pelajaran, dan urusan menyuapi teman...</p>
+              <div class="card-hidden-content">
+                <hr class="card-divider">
+                <div class="handwriting-text">
+                  <p>“HAHAHAHA, masa SMA mungkin punya banyak sekali cerita yang nggak akan pernah habis kalau dibahas.</p>
+                  <p>Kita yang sering duduk bersebelahan, bahkan kadang sampai tidur bareng di kelas. Belum lagi kebiasaanmu yang suka makan saat guru sedang menjelaskan. Apalagi kalau sudah pelajaran agama, rasanya kamu punya hubungan yang cukup rumit dengan jam pelajaran itu. WKWKWK.</p>
+                  <p>Ada juga kebiasaanmu yang satu ini: kalau sudah waktunya mencatat, rasanya setiap huruf harus ditulis dengan penuh pertimbangan. Satu huruf demi satu huruf, pelan-pelan sekali. Padahal kalau urusan merangkai kata untuk cerita, kamu bisa begitu lancar. Memang ada-ada saja dirimu.</p>
+                  <p>Dan aku juga nggak akan lupa bagaimana kamu selalu kesal kalau aku makan terlalu lama sampai akhirnya memilih menyuapiku sendiri. HAHAHAHA.</p>
+                  <p>Dulu kamu bahkan nggak minum kopi waktu sekolah, tapi sekarang setelah lulus malah jadi suka ngopi. Banyak juga ya kebiasaan yang berubah seiring waktu.</p>
+                  <p>Kalau dipikir-pikir, kelas mungkin tempat kita belajar, tapi ternyata juga menjadi tempat terkumpulnya banyak kenangan absurd kita. Dari tidur bersama, makan saat pelajaran, sampai hal-hal kecil yang sekarang justru paling sering membuatku tersenyum ketika mengingatnya.”</p>
+                </div>
+              </div>
+              <button class="btn-card-toggle">
+                <span>Buka Catatan</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Little Things Closing Quote Banner -->
+          <div class="little-things-footer-banner">
+            <span class="deco-icon-left"><i class="fa-solid fa-seedling"></i> <i class="fa-solid fa-star"></i></span>
+            <p class="little-things-footer-quote">
+              “Some memories are too small to tell everyone, but too special to ever forget.”
+            </p>
+            <span class="deco-icon-right"><i class="fa-solid fa-heart"></i> <i class="fa-solid fa-sparkles"></i></span>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==============================================
+           SECTION 8: READ THIS WHEN...
+           ============================================== -->
+      <section class="page-section" id="read-when" data-title="Read This When...">
+        <div class="scrapbook-container">
+          
+          <div class="section-header">
+            <span class="section-tag"><i class="fa-solid fa-envelope-circle-check"></i> Emergency Hugs</span>
+            <h2 class="section-title">Read This When...</h2>
+            <p class="section-subtitle">Untuk saat-saat di mana aku gak bisa ada langsung di sampingmu, simpan surat-surat kecil ini di dalam hatimu.</p>
+            <div class="floral-divider">
+              <span>❧ <i class="fa-solid fa-heart"></i> ❧</span>
+            </div>
+          </div>
+
+          <!-- Mini Envelopes Grid -->
+          <div class="read-when-grid">
+            
+            <!-- When 1 -->
+            <div class="when-envelope" data-when="sad">
+              <div class="when-env-pocket">
+                <div class="when-flap"></div>
+                <div class="when-seal"><i class="fa-solid fa-cloud-showers-heavy"></i></div>
+                <div class="when-title-box">
+                  <span class="when-label">OPEN WHEN:</span>
+                  <h4>Read this when you're sad.</h4>
+                </div>
+              </div>
+              <button class="btn-open-when">
+                <span>Buka Surat Pelukan</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <!-- When 2 -->
+            <div class="when-envelope" data-when="miss">
+              <div class="when-env-pocket">
+                <div class="when-flap"></div>
+                <div class="when-seal"><i class="fa-solid fa-paper-plane"></i></div>
+                <div class="when-title-box">
+                  <span class="when-label">OPEN WHEN:</span>
+                  <h4>Read this when you miss me.</h4>
+                </div>
+              </div>
+              <button class="btn-open-when">
+                <span>Buka Surat Rindu</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <!-- When 3 -->
+            <div class="when-envelope" data-when="lonely">
+              <div class="when-env-pocket">
+                <div class="when-flap"></div>
+                <div class="when-seal"><i class="fa-solid fa-moon"></i></div>
+                <div class="when-title-box">
+                  <span class="when-label">OPEN WHEN:</span>
+                  <h4>Read this when you feel lonely.</h4>
+                </div>
+              </div>
+              <button class="btn-open-when">
+                <span>Buka Surat Hangat</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <!-- When 4 -->
+            <div class="when-envelope" data-when="loved">
+              <div class="when-env-pocket">
+                <div class="when-flap"></div>
+                <div class="when-seal"><i class="fa-solid fa-heart"></i></div>
+                <div class="when-title-box">
+                  <span class="when-label">OPEN WHEN:</span>
+                  <h4>Read this when you need a reminder that you're loved.</h4>
+                </div>
+              </div>
+              <button class="btn-open-when">
+                <span>Buka Surat Cinta</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <!-- When 5 -->
+            <div class="when-envelope" data-when="difficult">
+              <div class="when-env-pocket">
+                <div class="when-flap"></div>
+                <div class="when-seal"><i class="fa-solid fa-seedling"></i></div>
+                <div class="when-title-box">
+                  <span class="when-label">OPEN WHEN:</span>
+                  <h4>Read this when life gets difficult.</h4>
+                </div>
+              </div>
+              <button class="btn-open-when">
+                <span>Buka Surat Kekuatan</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+          </div>
+
+          <div class="read-when-footer-banner">
+            <i class="fa-solid fa-heart banner-flower"></i>
+            <p>Ingat, pintuku dan telingaku selalu terbuka buatmu, 24/7 tanpa syarat.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Site Footer -->
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <div class="footer-doodles">✦ <i class="fa-solid fa-heart"></i> ❦ <i class="fa-solid fa-heart"></i> ✦</div>
+          <p class="footer-tagline">“Made with love, for someone who has been part of my story.”</p>
+          <div class="footer-meta">
+            <span>A Little Place Called Us • 2026 Edition</span>
+            <span class="meta-dot">•</span>
+            <span>Crafted for Arini</span>
+          </div>
+          <button class="btn-back-home" id="btnBackHome">
+            <i class="fa-solid fa-arrow-up"></i>
+            <span>Kembali ke Atas / Home</span>
+          </button>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- ==============================================
+       MODALS & LIGHTBOX
+       ============================================== -->
+
+  <!-- Lightbox Modal for Gallery Photos -->
+  <div class="modal-backdrop" id="lightboxModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="lightbox-container">
+      <button class="modal-close-btn" id="lightboxCloseBtn" aria-label="Tutup Lightbox">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      
+      <div class="lightbox-content">
+        <button class="lightbox-nav-btn prev-btn" id="lightboxPrevBtn" aria-label="Foto Sebelumnya">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div class="lightbox-polaroid">
+          <span class="washi-tape washi-center"></span>
+          <div class="lightbox-img-wrap">
+            <img src="" alt="" id="lightboxImg" class="lightbox-img">
+          </div>
+          <div class="lightbox-meta">
+            <span class="lightbox-date" id="lightboxDate">Chapter 01</span>
+            <p class="lightbox-caption" id="lightboxCaption">Deskripsi foto...</p>
+            <div class="lightbox-counter" id="lightboxCounter">1 / 8</div>
+          </div>
+        </div>
+
+        <button class="lightbox-nav-btn next-btn" id="lightboxNextBtn" aria-label="Foto Selanjutnya">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Letter Reading Modal (For Section 3 Letters) -->
+  <div class="modal-backdrop" id="letterModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="letter-modal-paper">
+      <button class="modal-close-btn" id="letterModalCloseBtn" aria-label="Lipat Surat">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      
+      <div class="paper-texture-wrap">
+        <div class="letter-postmark">
+          <span class="postmark-circle">AIR MAIL • SPECIAL DELIVERY</span>
+        </div>
+        
+        <div class="letter-paper-header">
+          <span class="letter-category-tag" id="modalLetterCategory">A Birthday Letter</span>
+          <h2 class="letter-paper-title" id="modalLetterTitle">Untuk Sahabat Masa Kecilku</h2>
+          <span class="letter-salutation">Hai Arini,</span>
+        </div>
+
+        <div class="letter-paper-body handwriting-text" id="modalLetterBody">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="letter-paper-footer">
+          <div class="letter-sign-off handwriting-text">
+            <span>Peluk hangat selalu,</span>
+            <strong class="sign-name">Sahabat Masa Kecilmu</strong>
+          </div>
+          <div class="wax-stamp-imprint">
+            <i class="fa-solid fa-stamp"></i> SEALED WITH LOVE
+          </div>
+        </div>
+      </div>
+
+      <div class="letter-modal-actions">
+        <button class="btn-vintage-secondary" id="letterModalCloseBtn2">
+          <i class="fa-solid fa-envelope"></i> Lipat &amp; Simpan Kembali Surat
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Read This When Modal (For Section 8 Letters) -->
+  <div class="modal-backdrop" id="readWhenModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="letter-modal-paper when-modal-paper">
+      <button class="modal-close-btn" id="readWhenCloseBtn" aria-label="Tutup Surat">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      
+      <div class="paper-texture-wrap">
+        <div class="when-modal-stamp">
+          <span id="readWhenIcon"><i class="fa-solid fa-heart"></i></span>
+        </div>
+        
+        <div class="letter-paper-header">
+          <span class="letter-category-tag" id="readWhenCategoryTag">OPEN WHEN</span>
+          <h2 class="letter-paper-title" id="readWhenModalTitle">Surat Ketika...</h2>
+          <span class="letter-salutation">Untuk Arini, saat kamu membaca ini:</span>
+        </div>
+
+        <div class="letter-paper-body handwriting-text" id="readWhenModalBody">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="letter-paper-footer">
+          <div class="letter-sign-off handwriting-text">
+            <span>Selalu ada buatmu,</span>
+            <strong class="sign-name">Sahabat Terbaikmu</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="letter-modal-actions">
+        <button class="btn-vintage-secondary" id="readWhenCloseBtn2">
+          <i class="fa-solid fa-heart"></i> Tutup &amp; Simpan di Hatimu
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
